@@ -7,6 +7,10 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     public PhotonView pv;
 
+    [Header("Visuals")]
+    public SpriteRenderer spriteRenderer;   // Assign in Inspector (or leave null to auto-find on Start)
+    public Sprite[] possibleSprites;        // Assign available skins here
+
     [Header("Movement")]
     public float moveSpeed = 5f;
     private float horizontalMovement;
@@ -24,6 +28,28 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         pv = GetComponent<PhotonView>();
+
+        // Auto-find SpriteRenderer if not set
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        // Choose a sprite index on the owning client and sync to everyone
+        if (pv.IsMine)
+        {
+            int chosenIndex = 0;
+
+            if (possibleSprites != null && possibleSprites.Length > 0)
+            {
+                // Example strategy: based on join order
+                chosenIndex = PhotonNetwork.LocalPlayer.ActorNumber % possibleSprites.Length;
+
+                // Alternative strategies:
+                // chosenIndex = Random.Range(0, possibleSprites.Length);
+                // chosenIndex = YourSelectionFromMenu;
+            }
+
+            pv.RPC(nameof(SetPlayerSprite), RpcTarget.AllBuffered, chosenIndex);
+        }
     }
 
     void Update()
@@ -52,11 +78,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    private void SetPlayerSprite(int index)
+    {
+        if (possibleSprites == null || possibleSprites.Length == 0) return;
+        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        index = Mathf.Clamp(index, 0, possibleSprites.Length - 1);
+        spriteRenderer.sprite = possibleSprites[index];
+    }
+
     private bool IsGrounded()
     {
         if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, groundLayer))
         {
-            // Ground check layer overlaps with a layer labeled as ground
             return true;
         }
         return false;
@@ -68,5 +103,4 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
     }
 
-    // Player Movement Tutorial - https://www.youtube.com/watch?v=xb3d7HarKcI
 }
