@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public PhotonView pv;
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -17,13 +19,16 @@ public class Player : MonoBehaviour
     public Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
     public LayerMask groundLayer;
 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        pv = GetComponent<PhotonView>();
     }
 
     void Update()
     {
+        if (!pv.IsMine) return;
         rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
     }
 
@@ -34,6 +39,7 @@ public class Player : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (!pv.IsMine) return;
         if (!IsGrounded()) return;
 
         if (context.performed)
