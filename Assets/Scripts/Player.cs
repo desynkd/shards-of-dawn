@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
+using ExitGames.Client.Photon; // Needed for Hashtable
 
 public class Player : MonoBehaviour
 {
@@ -33,22 +34,30 @@ public class Player : MonoBehaviour
         if (spriteRenderer == null)
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        // Choose a sprite index on the owning client and sync to everyone
         if (pv.IsMine)
         {
-            int chosenIndex = 0;
-
-            if (possibleSprites != null && possibleSprites.Length > 0)
+            // Check if I already have a sprite stored in my CustomProperties
+            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("spriteIndex", out object spriteIndexObj))
             {
-                // Example strategy: based on join order
-                chosenIndex = PhotonNetwork.LocalPlayer.ActorNumber % possibleSprites.Length;
-
-                // Alternative strategies:
-                // chosenIndex = Random.Range(0, possibleSprites.Length);
-                // chosenIndex = YourSelectionFromMenu;
+                int spriteIndex = (int)spriteIndexObj;
+                pv.RPC(nameof(SetPlayerSprite), RpcTarget.AllBuffered, spriteIndex);
             }
+            else
+            {
+                // First time assigning sprite
+                int chosenIndex = 0;
+                if (possibleSprites != null && possibleSprites.Length > 0)
+                {
+                    chosenIndex = PhotonNetwork.LocalPlayer.ActorNumber % possibleSprites.Length;
+                }
 
-            pv.RPC(nameof(SetPlayerSprite), RpcTarget.AllBuffered, chosenIndex);
+                // Store it in my custom properties
+                var props = new Hashtable { { "spriteIndex", chosenIndex } };
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+                // Sync with everyone
+                pv.RPC(nameof(SetPlayerSprite), RpcTarget.AllBuffered, chosenIndex);
+            }
         }
     }
 
