@@ -1,9 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
+using ExitGames.Client.Photon; // Needed for Hashtable
 
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public PhotonView pv;
+
+    [Header("Visuals")]
+    public SpriteRenderer spriteRenderer;   // Assign in Inspector (or leave null to auto-find on Start)
+    public Sprite[] possibleSprites;        // Assign available skins here
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -17,13 +24,46 @@ public class Player : MonoBehaviour
     public Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
     public LayerMask groundLayer;
 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        pv = GetComponent<PhotonView>();
+
+        // Auto-find SpriteRenderer if not set
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (pv.IsMine)
+        {
+            // Check if I already have a sprite stored in my CustomProperties
+            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("spriteIndex", out object spriteIndexObj))
+            {
+                int spriteIndex = (int)spriteIndexObj;
+                pv.RPC(nameof(SetPlayerSprite), RpcTarget.AllBuffered, spriteIndex);
+            }
+            else
+            {
+                // First time assigning sprite
+                int chosenIndex = 0;
+                if (possibleSprites != null && possibleSprites.Length > 0)
+                {
+                    chosenIndex = PhotonNetwork.LocalPlayer.ActorNumber % possibleSprites.Length;
+                }
+
+                // Store it in my custom properties
+                var props = new Hashtable { { "spriteIndex", chosenIndex } };
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+                // Sync with everyone
+                pv.RPC(nameof(SetPlayerSprite), RpcTarget.AllBuffered, chosenIndex);
+            }
+        }
     }
 
     void Update()
     {
+        if (!pv.IsMine) return;
         rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
     }
 
@@ -34,6 +74,7 @@ public class Player : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (!pv.IsMine) return;
         if (!IsGrounded()) return;
 
         if (context.performed)
@@ -46,11 +87,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    private void SetPlayerSprite(int index)
+    {
+        if (possibleSprites == null || possibleSprites.Length == 0) return;
+        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        index = Mathf.Clamp(index, 0, possibleSprites.Length - 1);
+        spriteRenderer.sprite = possibleSprites[index];
+    }
+
     private bool IsGrounded()
     {
         if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, groundLayer))
         {
-            // Ground check layer overlaps with a layer labeled as ground
             return true;
         }
         return false;
@@ -62,5 +112,4 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
     }
 
-    // Player Movement Tutorial - https://www.youtube.com/watch?v=xb3d7HarKcI
 }

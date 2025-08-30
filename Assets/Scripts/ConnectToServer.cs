@@ -4,19 +4,27 @@ using UnityEngine.SceneManagement;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        Debug.Log("[ConnectToServer] Awake called. Setting AutomaticallySyncScene to true.");
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
     void Start()
     {
+        Debug.Log("[ConnectToServer] Start called. Connecting using settings...");
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
+        Debug.Log("[ConnectToServer] OnConnectedToMaster called. Joining lobby...");
         PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
+        Debug.Log("[ConnectToServer] OnJoinedLobby called. Loading Lobby scene...");
         SceneManager.LoadScene("Lobby");
     }
 }
