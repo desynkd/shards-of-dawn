@@ -8,6 +8,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         Debug.Log("[ConnectToServer] Awake called. Setting AutomaticallySyncScene to true.");
         PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.SerializationRate = 20; // Increase serialization rate for smoother sync
     }
 
     void Start()
