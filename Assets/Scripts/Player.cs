@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Photon.Pun;
 using ExitGames.Client.Photon; // Needed for Hashtable
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -112,4 +113,13 @@ public class Player : MonoBehaviour
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // Check if collided with Respawn layer
+        if (other.gameObject.layer == LayerMask.NameToLayer("Respawn"))
+        {
+            Debug.Log("[Player] Collided with Respawn layer. Restarting scene.");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
 }

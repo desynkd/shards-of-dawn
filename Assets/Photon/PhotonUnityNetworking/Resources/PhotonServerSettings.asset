@@ -41,6 +41,7 @@ MonoBehaviour:
   - RespawnSpaceship
   - SetPlayerSprite
   - RPC_StartCutscene
+  - RPC_SkipCutscene
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
