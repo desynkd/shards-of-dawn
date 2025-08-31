@@ -43,6 +43,8 @@ MonoBehaviour:
   - RPC_StartCutscene
   - RPC_RequestGameOver
   - RPC_BeginFall
+  - RPC_LoadIndex
+  - RPC_LoadName
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
