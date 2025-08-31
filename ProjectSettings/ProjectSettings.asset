@@ -797,11 +797,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 0b3c1757-6323-436c-ae71-6c07ff0a0088
+  cloudProjectId: 5d89fb8a-6ca7-4b18-9050-9e57098a7de0
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: shards-of-dawn
-  organizationId: sathruwanihapuarachchi7
+  projectName: Shards of Dawn
+  organizationId: desynkd
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
