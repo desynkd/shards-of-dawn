@@ -45,6 +45,7 @@ MonoBehaviour:
   - RPC_BeginFall
   - RPC_LoadIndex
   - RPC_LoadName
+  - RPC_SkipCutscene
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

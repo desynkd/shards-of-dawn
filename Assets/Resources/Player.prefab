@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 7155512341298765432}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,7 +225,7 @@ MonoBehaviour:
   - {fileID: -612100085893734951, guid: 70fd1ba5e51ac434b87779c18077c881, type: 3}
   - {fileID: -6511610701255145038, guid: ffbd18bab3fe96d4d9ae6f2d644eb1df, type: 3}
   moveSpeed: 5
-  jumpPower: 10
+  jumpPower: 6.5
   groundCheckPos: {fileID: 9074339361619540870}
   groundCheckSize: {x: 1.02, y: 0.05}
   groundLayer:
@@ -372,9 +372,9 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 8
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1

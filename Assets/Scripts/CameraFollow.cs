@@ -3,36 +3,37 @@ using Photon.Pun;
 
 public class CameraFollow : MonoBehaviour
 {
-	public Vector3 offset = new Vector3(0f, 0f, -10f);
-	public float followLerp = 10f;
+    public Vector3 offset = new Vector3(0, 0, -10); // Default for 2D cameras
+    private Transform target;
 
-	private Transform target;
+    void Start()
+    {
+        StartCoroutine(FindLocalPlayer());
+    }
 
-	void LateUpdate()
-	{
-		if (target == null)
-		{
-			TryFindTarget();
-			if (target == null) return;
-		}
+    private System.Collections.IEnumerator FindLocalPlayer()
+    {
+        while (target == null)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var p in players)
+            {
+                PhotonView pv = p.GetComponent<PhotonView>();
+                if (pv != null && pv.IsMine) // only follow my own player
+                {
+                    target = p.transform;
+                    break;
+                }
+            }
+            yield return null; // wait for next frame
+        }
+    }
 
-		Vector3 desired = target.position + offset;
-		transform.position = Vector3.Lerp(transform.position, desired, Mathf.Clamp01(followLerp * Time.deltaTime));
-	}
-
-	private void TryFindTarget()
-	{
-		var players = FindObjectsOfType<Player>();
-		for (int i = 0; i < players.Length; i++)
-		{
-			var view = players[i].pv;
-			if (view != null && view.IsMine)
-			{
-				target = players[i].transform;
-				break;
-			}
-		}
-	}
+    void LateUpdate()
+    {
+        if (target != null)
+        {
+            transform.position = target.position + offset;
+        }
+    }
 }
-
-

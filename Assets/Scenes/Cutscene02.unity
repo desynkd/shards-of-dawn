@@ -466,8 +466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7d8db482f72d1428884f84ba5d0dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  cutsceneDuration: 5
-  nextSceneName: GameLevel02
+  cutsceneDuration: 2
+  nextSceneName: GameLevel01
 --- !u!4 &1819472606
 Transform:
   m_ObjectHideFlags: 0
