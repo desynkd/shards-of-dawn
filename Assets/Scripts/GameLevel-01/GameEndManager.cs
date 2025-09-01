@@ -29,7 +29,6 @@ public class GameEndManager : MonoBehaviour
     public void StartGameEndSequence(Vector2 endPosition, float endZoom, float moveSpeed, float zoomSpeed, float visionRevealSpeed, float fadeSpeed, float transitionDelay)
     {
         if (isEndingSequence) return;
-
         isEndingSequence = true;
         StartCoroutine(GameEndSequence(endPosition, endZoom, moveSpeed, zoomSpeed, visionRevealSpeed, fadeSpeed, transitionDelay));
     }
@@ -59,12 +58,11 @@ public class GameEndManager : MonoBehaviour
 
     private IEnumerator RevealFullVision(float speed)
     {
-        Debug.Log("Revealing full vision by increasing global lighting...");
-
+        Debug.Log("Revealing full vision by increasing global lighting...");   
         // Find all global lights
         var allLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
         var globalLights = new List<Light2D>();
-
+        
         foreach (var light in allLights)
         {
             if (light.lightType == Light2D.LightType.Global)
@@ -120,7 +118,6 @@ public class GameEndManager : MonoBehaviour
     private IEnumerator MoveCameraToPosition(Vector2 endPosition, float endZoom, float moveSpeed, float zoomSpeed)
     {
         Debug.Log("Moving camera to end position...");
-
         if (mainCamera == null)
         {
             Debug.LogError("Main camera not found!");
@@ -143,7 +140,6 @@ public class GameEndManager : MonoBehaviour
 
             // Move camera
             mainCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
-
             // Zoom camera
             mainCamera.orthographicSize = Mathf.Lerp(startSize, endZoom, progress);
 
@@ -160,7 +156,6 @@ public class GameEndManager : MonoBehaviour
     private IEnumerator WhiteFadeIn(float speed)
     {
         Debug.Log("Starting white fade...");
-
         // Create fade canvas
         CreateFadeCanvas();
 
@@ -207,19 +202,22 @@ public class GameEndManager : MonoBehaviour
 
     private void LoadNextScene()
     {
-        Debug.Log("Respawning current level...");
-
+        Debug.Log("Loading GameLevel02...");
+        
         // Reset camera and torch features before scene transition
         ResetFeatures();
 
-        string currentSceneName = SceneManager.GetActiveScene().name;
+        // Load next scene
         if (PhotonNetwork.IsConnectedAndReady && PhotonNetwork.InRoom)
         {
-            PhotonNetwork.LoadLevel(currentSceneName);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel("GameLevel02");
+            }
         }
         else
         {
-            SceneManager.LoadScene(currentSceneName);
+            SceneManager.LoadScene("GameLevel02");
         }
     }
 
