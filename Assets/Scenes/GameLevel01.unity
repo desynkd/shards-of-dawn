@@ -197,7 +197,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 1570698742127296960, guid: 93ac2261255af6d4e99352e183afa079, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -316,15 +316,67 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 26, y: 2, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 32, y: 7, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 4, y: 12, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 33, y: 12, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: bd5eea2709527b54ba7a5dc2f5d3e9b1, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: ebad201f146b22d4eb089dbfd1e55c7e, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 227f3f32c43fb724ead6a65c77af6df7, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: e8df896a34fb246448ff21ac7a8922ac, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 4491471838512937259, guid: 1ec4cc0361890d34aa3f7f5ca3b4f52e, type: 3}
-  m_TileMatrixArray:
   - m_RefCount: 1
+    m_Data: {fileID: -429617706100523135, guid: 0b802a98ef407ef45923e9fccb0bbbee, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -5455174346999595902, guid: 8e70d97f75557b04382b67e902a6466d, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 4730405810782780969, guid: 60d00b6e58e1e824d8ec694a0ee9a4a7, type: 3}
+  m_TileMatrixArray:
+  - m_RefCount: 5
     m_Data:
       e00: 1
       e01: 0
@@ -343,13 +395,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 1
+  - m_RefCount: 5
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -6, y: -2, z: 0}
-  m_Size: {x: 6, y: 2, z: 1}
+  m_Size: {x: 40, y: 15, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -1114,7 +1166,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -6455210927955734212, guid: f759c539accf8a5439841e163da38bb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1497,7 +1549,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -6455210927955734212, guid: f759c539accf8a5439841e163da38bb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1587,7 +1639,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -6455210927955734212, guid: f759c539accf8a5439841e163da38bb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1731,7 +1783,7 @@ Transform:
   m_GameObject: {fileID: 502564147}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.1, y: 12.18, z: 0}
+  m_LocalPosition: {x: 34.41, y: 12.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1749,7 +1801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7910f0645f43be34bbb6d8631aafec8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PressureButton05
-  doorTrigger: {fileID: 1261359079}
+  doorTrigger: {fileID: 798264854}
   pressedSprite: {fileID: -863646044393144132, guid: 1c0dbf7f0b4fdb242927955863f28ce2, type: 3}
   playerTag: Player
 --- !u!1 &504945309
@@ -2025,7 +2077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 416cf1c24a48c39469fe2f2a3f0e7d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PressureButton04
-  doorTrigger: {fileID: 1261359079}
+  doorTrigger: {fileID: 798264854}
   pressedSprite: {fileID: -863646044393144132, guid: 1c0dbf7f0b4fdb242927955863f28ce2, type: 3}
   playerTag: Player
 --- !u!61 &544001722
@@ -4212,6 +4264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 798264856}
   - component: {fileID: 798264855}
+  - component: {fileID: 798264857}
   m_Layer: 0
   m_Name: MultiplayerDoor01Trigger
   m_TagString: Untagged
@@ -4251,6 +4304,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &798264857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 798264854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 798264855}
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &839198984
 GameObject:
   m_ObjectHideFlags: 0
@@ -4381,7 +4457,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 9179172765007742821, guid: 709ef9e6524a08145bca299f2b303794, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5188,7 +5264,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -6455210927955734212, guid: f759c539accf8a5439841e163da38bb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5486,7 +5562,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -6455210927955734212, guid: f759c539accf8a5439841e163da38bb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5701,7 +5777,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -6455210927955734212, guid: f759c539accf8a5439841e163da38bb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5791,7 +5867,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -6455210927955734212, guid: f759c539accf8a5439841e163da38bb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5971,7 +6047,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -6455210927955734212, guid: f759c539accf8a5439841e163da38bb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6015,6 +6091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   targetToDeactivate: {fileID: 1261359079}
+  doorTrigger: {fileID: 798264854}
   pressedSprite: {fileID: -863646044393144132, guid: 1c0dbf7f0b4fdb242927955863f28ce2, type: 3}
   playerTag: Player
 --- !u!61 &1928039999
