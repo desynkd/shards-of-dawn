@@ -10,13 +10,14 @@ public class PlayerTorch : MonoBehaviourPun
 	public Color color = Color.white;
 	public float globalLightIntensity = 0f;
 
-	private Light2D torch;
+	[HideInInspector]
+	public Light2D torch;
 
 	void Start()
 	{
 		if (photonView != null && !photonView.IsMine) return;
 
-		var allLights = FindObjectsOfType<Light2D>();
+		var allLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
 		for (int i = 0; i < allLights.Length; i++)
 		{
 			if (allLights[i].lightType == Light2D.LightType.Global)
@@ -33,6 +34,12 @@ public class PlayerTorch : MonoBehaviourPun
 		torch.pointLightInnerRadius = innerRadius;
 		torch.falloffIntensity = 0.6f;
 		torch.shadowsEnabled = false;
+	}
+
+	// Public method to get the torch light for external access
+	public Light2D GetTorchLight()
+	{
+		return torch;
 	}
 }
 

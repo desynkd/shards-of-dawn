@@ -1267,6 +1267,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1399,13 +1400,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2c4c1b4e5a64d4ab7a634d2f8a6f9d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 14f0ad30d151a6847992a480a50e4d69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 0, z: -10}
-  followLerp: 10
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a590cbdd09324449a7924d71217532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraFollowTesting
+  target: {fileID: 1845487047}
+  offset: {x: 0, y: 0, z: -10}
 --- !u!1 &520019674
 GameObject:
   m_ObjectHideFlags: 0
@@ -4884,6 +4898,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2cc71b5d8b08d84b824464e4e606e1f, type: 3}
+--- !u!4 &1845487047 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3047730973718328232, guid: a2cc71b5d8b08d84b824464e4e606e1f, type: 3}
+  m_PrefabInstance: {fileID: 1844528571}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1950887599
 GameObject:
   m_ObjectHideFlags: 0

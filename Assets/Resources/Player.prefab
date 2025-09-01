@@ -41,37 +41,6 @@ Transform:
   - {fileID: 9074339361619540870}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4372057194039200001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4425840283047234640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f9f8d8a8b2b4d03be0b0a1a2f3c4d5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fallY: -10
-  delaySeconds: 1.5
---- !u!114 &7155512341298765432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4425840283047234640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3ef6a2a6f74f7d9e1c3f13f9f2c111, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outerRadius: 5
-  innerRadius: 0.3
-  intensity: 1
-  color: {r: 1, g: 1, b: 1, a: 1}
-  globalLightIntensity: 0
 --- !u!212 &3140932513534745556
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -365,30 +334,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 4425840283047234640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Script: {fileID: 11500000, guid: c749ae31d4a04d24faa04b01b87b531e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonTransformViewClassic
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 4
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 8
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
+  m_EditorClassIdentifier: Assembly-CSharp::PhotonRigidbody2DView
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 3
+  m_SmoothingSpeed: 8
+  m_UseLerp: 1
+--- !u!114 &4372057194039200001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425840283047234640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f9f8d8a8b2b4d03be0b0a1a2f3c4d5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallY: -10
+  delaySeconds: 1.5
+  useCameraBottom: 1
+  cameraMargin: 1
+--- !u!114 &7155512341298765432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425840283047234640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b3ef6a2a6f74f7d9e1c3f13f9f2c111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outerRadius: 5
+  innerRadius: 0.3
+  intensity: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  globalLightIntensity: 0
+  torch: {fileID: 0}
 --- !u!1 &5925458467184594483
 GameObject:
   m_ObjectHideFlags: 0
