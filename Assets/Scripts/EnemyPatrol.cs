@@ -61,12 +61,16 @@ public class EnemyPatrol : MonoBehaviourPun
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		TryKill(other.GetComponent<Player>());
+		var player = other.GetComponentInParent<Player>();
+		if (player == null) player = other.GetComponent<Player>();
+		TryKill(player);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		TryKill(collision.collider.GetComponent<Player>());
+		var player = collision.collider.GetComponentInParent<Player>();
+		if (player == null) player = collision.collider.GetComponent<Player>();
+		TryKill(player);
 	}
 
 	void TryKill(Player player)

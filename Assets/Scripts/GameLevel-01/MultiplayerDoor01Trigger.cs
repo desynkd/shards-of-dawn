@@ -80,63 +80,16 @@ public class MultiplayerDoor01Trigger : MonoBehaviourPun
     {
         if (doorDeactivated) return;
         buttonPressed[buttonIndex] = true;
-        
+
         Debug.Log($"[MultiplayerDoor01Trigger] Button {buttonIndex} pressed. Player count: {playerCount}. Button states: 01={buttonPressed[0]}, 04={buttonPressed[1]}, 05={buttonPressed[2]}");
 
-        if (playerCount == 2)
+        int requiredButtons = Mathf.Min(playerCount, 3);
+        int pressedCount = 0;
+        for (int i = 0; i < 3; i++) if (buttonPressed[i]) pressedCount++;
+
+        if (pressedCount >= requiredButtons)
         {
-            // Sequence: 01 -> 04
-            if (buttonPressed[0] && !buttonPressed[1])
-            {
-                // Wait for 04
-                Debug.Log("[MultiplayerDoor01Trigger] Button 01 pressed, waiting for 04...");
-            }
-            else if (buttonPressed[0] && buttonPressed[1])
-            {
-                // Correct sequence: 01 then 04
-                Debug.Log("[MultiplayerDoor01Trigger] Correct sequence! Deactivating door.");
-                DeactivateDoor();
-            }
-            else if (buttonPressed[1] && !buttonPressed[0])
-            {
-                // 04 pressed before 01: restart scene
-                Debug.Log("[MultiplayerDoor01Trigger] Wrong sequence! 04 pressed before 01. Restarting scene.");
-                RestartScene();
-            }
-        }
-        else if (playerCount == 3)
-        {
-            // Sequence: 01 -> 04 -> 05
-            if (buttonPressed[0] && !buttonPressed[1] && !buttonPressed[2])
-            {
-                // Wait for 04
-                Debug.Log("[MultiplayerDoor01Trigger] Button 01 pressed, waiting for 04...");
-            }
-            else if (buttonPressed[0] && buttonPressed[1] && !buttonPressed[2])
-            {
-                // Wait for 05
-                Debug.Log("[MultiplayerDoor01Trigger] Buttons 01 and 04 pressed, waiting for 05...");
-            }
-            else if (buttonPressed[0] && buttonPressed[1] && buttonPressed[2])
-            {
-                // Correct sequence
-                Debug.Log("[MultiplayerDoor01Trigger] Correct sequence! Deactivating door.");
-                DeactivateDoor();
-            }
-            else if ((buttonPressed[1] && !buttonPressed[0]) || (buttonPressed[2] && (!buttonPressed[0] || !buttonPressed[1])))
-            {
-                // Wrong order
-                Debug.Log("[MultiplayerDoor01Trigger] Wrong sequence! Restarting scene.");
-                RestartScene();
-            }
-        }
-        else if (playerCount >= 4)
-        {
-            // All 3 buttons must be pressed simultaneously (order doesn't matter)
-            if (buttonColliding[0] && buttonColliding[1] && buttonColliding[2])
-            {
-                DeactivateDoor();
-            }
+            DeactivateDoor();
         }
     }
 
@@ -161,15 +114,6 @@ public class MultiplayerDoor01Trigger : MonoBehaviourPun
     private void HandleButtonReleased(int buttonIndex)
     {
         buttonColliding[buttonIndex] = false;
-        if (playerCount >= 4 && doorDeactivated)
-        {
-            // Start timer to reactivate door if no one is on any button
-            if (!buttonColliding[0] && !buttonColliding[1] && !buttonColliding[2])
-            {
-                if (reactivateCoroutine != null) StopCoroutine(reactivateCoroutine);
-                reactivateCoroutine = StartCoroutine(ReactivateDoorAfterDelay());
-            }
-        }
     }
 
     public void OnButtonCollide(int buttonIndex)
@@ -193,19 +137,6 @@ public class MultiplayerDoor01Trigger : MonoBehaviourPun
     private void HandleButtonCollide(int buttonIndex)
     {
         buttonColliding[buttonIndex] = true;
-        if (playerCount >= 4 && !doorDeactivated)
-        {
-            if (buttonColliding[0] && buttonColliding[1] && buttonColliding[2])
-            {
-                DeactivateDoor();
-            }
-        }
-        // Cancel reactivation if someone steps back on
-        if (reactivateCoroutine != null)
-        {
-            StopCoroutine(reactivateCoroutine);
-            reactivateCoroutine = null;
-        }
     }
 
     private void DeactivateDoor()
@@ -217,97 +148,21 @@ public class MultiplayerDoor01Trigger : MonoBehaviourPun
 
     private IEnumerator ReactivateDoorAfterDelay()
     {
-        yield return new WaitForSeconds(doorReactivateDelay);
-        if (doorToDeactivate != null)
-            doorToDeactivate.SetActive(true);
-        doorDeactivated = false;
-        // Reset button states for next round
-        buttonPressed[0] = buttonPressed[1] = buttonPressed[2] = false;
+        yield return null;
     }
 
-    private void RestartScene()
-    {
-        if (PhotonNetwork.InRoom)
-        {
-            Debug.Log("[MultiplayerDoor01Trigger] Initiating scene restart for all clients...");
-            
-            // Use RPC to ensure all clients restart the scene
-            photonView.RPC("RPC_RestartScene", RpcTarget.All);
-            
-            // Also try the master client approach as backup
-            if (PhotonNetwork.IsMasterClient)
-            {
-                StartCoroutine(MasterClientRestartBackup());
-            }
-        }
-        else
-        {
-            // Offline mode
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-        }
-    }
+    private void RestartScene(){}
 
-    private IEnumerator MasterClientRestartBackup()
-    {
-        // Wait a bit longer than the RPC approach
-        yield return new WaitForSeconds(0.5f);
-        
-        // If we're still the master client and in the room, force restart
-        if (PhotonNetwork.IsMasterClient && PhotonNetwork.InRoom)
-        {
-            Debug.Log("[MultiplayerDoor01Trigger] Master client backup restart triggered");
-            string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            PhotonNetwork.LoadLevel(currentSceneName);
-        }
-    }
+    private IEnumerator MasterClientRestartBackup(){yield return null;}
 
     // Alternative method to force scene sync if needed
     [PunRPC]
-    private void RPC_ForceSceneSync()
-    {
-        Debug.Log("[MultiplayerDoor01Trigger] Force scene sync triggered");
-        string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        
-        // Force reload the current scene
-        if (PhotonNetwork.InRoom)
-        {
-            PhotonNetwork.LoadLevel(currentSceneName);
-        }
-        else
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneName);
-        }
-    }
+    private void RPC_ForceSceneSync(){}
 
     [PunRPC]
-    private void RPC_RestartScene()
-    {
-        Debug.Log("[MultiplayerDoor01Trigger] Restarting scene for all clients...");
-        
-        // Add a small delay to ensure the RPC is processed by all clients
-        StartCoroutine(RestartSceneWithDelay());
-    }
+    private void RPC_RestartScene(){}
 
-    private IEnumerator RestartSceneWithDelay()
-    {
-        // Wait a frame to ensure all RPCs are processed
-        yield return null;
-        
-        string currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        Debug.Log($"[MultiplayerDoor01Trigger] Loading scene: {currentSceneName}");
-        
-        // Ensure we're still in a room before loading
-        if (PhotonNetwork.InRoom)
-        {
-            // Use PhotonNetwork.LoadLevel for all clients to ensure synchronization
-            PhotonNetwork.LoadLevel(currentSceneName);
-        }
-        else
-        {
-            // Fallback to regular scene loading if not in room
-            UnityEngine.SceneManagement.SceneManager.LoadScene(currentSceneName);
-        }
-    }
+    private IEnumerator RestartSceneWithDelay(){yield return null;}
 
     // Helper for PressureButton scripts to register their index
     public int GetButtonIndex(GameObject buttonObj)
