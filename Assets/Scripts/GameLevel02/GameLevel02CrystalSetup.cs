@@ -10,11 +10,11 @@ public class GameLevel02CrystalSetup : MonoBehaviour
     [Header("Game End Settings")]
     public Vector2 endCameraPosition = new Vector2(22, -5);
     public float endCameraZoom = 12f;
-    public float cameraMoveSpeed = 2f;
-    public float cameraZoomSpeed = 1f;
-    public float visionRevealSpeed = 1f;
-    public float whiteFadeSpeed = 1f;
-    public float sceneTransitionDelay = 2f;
+    public float cameraMoveSpeed = 8f; // Increased from 4f for 2x faster movement
+    public float cameraZoomSpeed = 4f; // Increased from 2f for 2x faster zoom
+    public float visionRevealSpeed = 0.25f; // Reduced from 0.5f for 2x faster vision reveal
+    public float whiteFadeSpeed = 0.25f; // Reduced from 0.5f for 2x faster fade
+    public float sceneTransitionDelay = 0.5f; // Reduced from 1f for 2x faster transition
 
     [ContextMenu("Setup Complete GameLevel02 End")]
     public void SetupCompleteGameLevel02End()

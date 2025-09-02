@@ -44,7 +44,7 @@ public class GameEndManager2 : MonoBehaviour
         yield return StartCoroutine(MoveCameraToPosition(endPosition, endZoom, moveSpeed, zoomSpeed));
 
         // Step 3: Wait a bit for the reveal
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f); // Reduced from 0.5f for ultra-fast cinematic
 
         // Step 4: Start white fade
         yield return StartCoroutine(WhiteFadeIn(fadeSpeed));
