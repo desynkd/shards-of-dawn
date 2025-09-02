@@ -2805,10 +2805,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   playerPrefab: {fileID: 4425840283047234640, guid: a2cc71b5d8b08d84b824464e4e606e1f, type: 3}
-  minX: -3.91
-  maxX: -1.21
-  minY: -1.12
-  maxY: 0.45
+  minX: -19.13
+  maxX: -15.39
+  minY: -4.49
+  maxY: -3.58
 --- !u!4 &504945311
 Transform:
   m_ObjectHideFlags: 0
@@ -3516,7 +3516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 602405773}
   - component: {fileID: 602405772}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Fall_limit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
