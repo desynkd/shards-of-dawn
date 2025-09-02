@@ -11,7 +11,7 @@ public class GameEndManager : MonoBehaviour
     private Vector3 originalCameraPosition;
     private float originalCameraSize;
     private bool isEndingSequence = false;
-    
+
     // UI elements for white fade
     private Canvas fadeCanvas;
     private UnityEngine.UI.Image fadeImage;
@@ -29,7 +29,6 @@ public class GameEndManager : MonoBehaviour
     public void StartGameEndSequence(Vector2 endPosition, float endZoom, float moveSpeed, float zoomSpeed, float visionRevealSpeed, float fadeSpeed, float transitionDelay)
     {
         if (isEndingSequence) return;
-        
         isEndingSequence = true;
         StartCoroutine(GameEndSequence(endPosition, endZoom, moveSpeed, zoomSpeed, visionRevealSpeed, fadeSpeed, transitionDelay));
     }
@@ -59,8 +58,7 @@ public class GameEndManager : MonoBehaviour
 
     private IEnumerator RevealFullVision(float speed)
     {
-        Debug.Log("Revealing full vision by increasing global lighting...");
-        
+        Debug.Log("Revealing full vision by increasing global lighting...");   
         // Find all global lights
         var allLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
         var globalLights = new List<Light2D>();
@@ -120,7 +118,6 @@ public class GameEndManager : MonoBehaviour
     private IEnumerator MoveCameraToPosition(Vector2 endPosition, float endZoom, float moveSpeed, float zoomSpeed)
     {
         Debug.Log("Moving camera to end position...");
-        
         if (mainCamera == null)
         {
             Debug.LogError("Main camera not found!");
@@ -143,7 +140,6 @@ public class GameEndManager : MonoBehaviour
 
             // Move camera
             mainCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, progress);
-            
             // Zoom camera
             mainCamera.orthographicSize = Mathf.Lerp(startSize, endZoom, progress);
 
@@ -160,7 +156,6 @@ public class GameEndManager : MonoBehaviour
     private IEnumerator WhiteFadeIn(float speed)
     {
         Debug.Log("Starting white fade...");
-        
         // Create fade canvas
         CreateFadeCanvas();
 
@@ -229,7 +224,7 @@ public class GameEndManager : MonoBehaviour
     private void ResetFeatures()
     {
         Debug.Log("Resetting camera and lighting features...");
-        
+
         // Reset camera
         if (mainCamera != null)
         {

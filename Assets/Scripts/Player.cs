@@ -62,6 +62,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ChangeSize(float scaleMultiplier)
+    {
+        transform.localScale *= scaleMultiplier;
+        groundCheckSize *= scaleMultiplier;
+    }
     void Update()
     {
         if (!pv.IsMine) return;
@@ -105,13 +110,13 @@ public class Player : MonoBehaviour
         {
             return true;
         }
-        
+
         // Check if standing on another player
         if (IsStandingOnPlayer())
         {
             return true;
         }
-        
+
         return false;
     }
 
@@ -119,7 +124,7 @@ public class Player : MonoBehaviour
     {
         // Cast a ray downward to check if we're standing on a player
         RaycastHit2D hit = Physics2D.Raycast(groundCheckPos.position, Vector2.down, groundCheckSize.y);
-        
+
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             // Make sure we're actually above the player (check if our feet are above their head)
@@ -134,7 +139,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        
+
         return false;
     }
 

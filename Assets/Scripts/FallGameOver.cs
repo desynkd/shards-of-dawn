@@ -30,6 +30,16 @@ public class FallGameOver : MonoBehaviourPun
 
 	void RequestLoad()
 	{
+		// Check if we're in GameLevel02 and should restart the scene
+		GameLevel02Manager gameLevel02Manager = FindFirstObjectByType<GameLevel02Manager>();
+		if (gameLevel02Manager != null)
+		{
+			// We're in GameLevel02, restart the scene
+			gameLevel02Manager.RestartSceneWithDelay(delaySeconds);
+			return;
+		}
+
+		// Default behavior for other levels
 		if (!PhotonNetwork.IsConnectedAndReady || !PhotonNetwork.InRoom)
 		{
 			SceneManager.LoadScene("Loading");
