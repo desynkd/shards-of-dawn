@@ -41,6 +41,16 @@ MonoBehaviour:
   - RespawnSpaceship
   - SetPlayerSprite
   - RPC_StartCutscene
+  - RPC_RequestGameOver
+  - RPC_BeginFall
+  - RPC_LoadIndex
+  - RPC_LoadName
+  - RPC_SkipCutscene
+  - RPC_OnButtonCollide
+  - RPC_OnButtonPressed
+  - RPC_OnButtonReleased
+  - RPC_ForceSceneSync
+  - RPC_RestartScene
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
