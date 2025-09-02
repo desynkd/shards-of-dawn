@@ -86,24 +86,11 @@ public class EnemyPatrol : MonoBehaviourPun
 
 	void RequestLoad()
 	{
-		// Check if we're in GameLevel02 and should restart the scene
-		GameLevel02Manager gameLevel02Manager = FindFirstObjectByType<GameLevel02Manager>();
-		if (gameLevel02Manager != null)
-		{
-			// We're in GameLevel02, restart the scene for everyone
-			gameLevel02Manager.RestartScene();
-			return;
-		}
-
-		// Fallback behavior for other levels - restart current scene instead of going to "Loading"
 		if (!PhotonNetwork.IsConnectedAndReady || !PhotonNetwork.InRoom)
 		{
-			// Single player - restart current scene
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 			return;
 		}
-		
-		// Multiplayer - restart current scene for everyone
 		if (PhotonNetwork.IsMasterClient)
 		{
 			string currentSceneName = SceneManager.GetActiveScene().name;
