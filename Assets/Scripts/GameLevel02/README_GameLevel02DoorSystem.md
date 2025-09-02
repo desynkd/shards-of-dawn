@@ -95,3 +95,4 @@ The system provides detailed debug logging:
 - **Immediate Effect**: No waiting for multiple button presses
 - **Permanent State**: Door stays deactivated once button is pressed
 - **Single Player Focus**: Designed for individual player interaction with multiplayer sync
+

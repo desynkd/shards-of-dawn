@@ -105,3 +105,4 @@ public class MultiplayerDoor02Trigger : MonoBehaviourPun
         return buttonObj == pressureButton01;
     }
 }
+
