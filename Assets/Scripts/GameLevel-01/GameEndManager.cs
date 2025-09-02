@@ -58,11 +58,11 @@ public class GameEndManager : MonoBehaviour
 
     private IEnumerator RevealFullVision(float speed)
     {
-        Debug.Log("Revealing full vision by increasing global lighting...");   
+        Debug.Log("Revealing full vision by increasing global lighting...");
         // Find all global lights
         var allLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
         var globalLights = new List<Light2D>();
-        
+
         foreach (var light in allLights)
         {
             if (light.lightType == Light2D.LightType.Global)
@@ -202,22 +202,21 @@ public class GameEndManager : MonoBehaviour
 
     private void LoadNextScene()
     {
-        Debug.Log("Loading GameLevel02...");
-        
+        Debug.Log("Reloading current scene...");
         // Reset camera and torch features before scene transition
         ResetFeatures();
 
-        // Load next scene
+        string currentSceneName = SceneManager.GetActiveScene().name;
         if (PhotonNetwork.IsConnectedAndReady && PhotonNetwork.InRoom)
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.LoadLevel("GameLevel02");
+                PhotonNetwork.LoadLevel(currentSceneName);
             }
         }
         else
         {
-            SceneManager.LoadScene("GameLevel02");
+            SceneManager.LoadScene(currentSceneName);
         }
     }
 
