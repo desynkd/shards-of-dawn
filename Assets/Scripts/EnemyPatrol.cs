@@ -73,35 +73,51 @@ public class EnemyPatrol : MonoBehaviourPun
 	{
 		if (player == null) return;
 		if (triggeredKill) return;
-		if (player.pv != null && !player.pv.IsMine) return;
+		if (player.pv != null && !player.pv.IsMine) return; // Only trigger for local player
+		
 		triggeredKill = true;
-		ShowGameOverUI();
+		// ShowGameOverUI(); // Removed to prevent Game Over text from flashing
 		Invoke(nameof(RequestLoad), killDelaySeconds);
 	}
 
 	void RequestLoad()
 	{
-		if (!PhotonNetwork.IsConnectedAndReady || !PhotonNetwork.InRoom)
+		// Check if we're in GameLevel02 and should restart the scene
+		GameLevel02Manager gameLevel02Manager = FindFirstObjectByType<GameLevel02Manager>();
+		if (gameLevel02Manager != null)
 		{
-			SceneManager.LoadScene("Loading");
+			// We're in GameLevel02, restart the scene for everyone
+			gameLevel02Manager.RestartScene();
 			return;
 		}
+
+		// Fallback behavior for other levels - restart current scene instead of going to "Loading"
+		if (!PhotonNetwork.IsConnectedAndReady || !PhotonNetwork.InRoom)
+		{
+			// Single player - restart current scene
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			return;
+		}
+		
+		// Multiplayer - restart current scene for everyone
 		if (PhotonNetwork.IsMasterClient)
 		{
-			PhotonNetwork.LoadLevel("Loading");
+			string currentSceneName = SceneManager.GetActiveScene().name;
+			PhotonNetwork.LoadLevel(currentSceneName);
 		}
 		else
 		{
-			photonView.RPC(nameof(RPC_RequestGameOver), RpcTarget.MasterClient);
+			photonView.RPC(nameof(RPC_RequestRestart), RpcTarget.MasterClient);
 		}
 	}
 
 	[PunRPC]
-	void RPC_RequestGameOver()
+	void RPC_RequestRestart()
 	{
 		if (PhotonNetwork.IsMasterClient)
 		{
-			PhotonNetwork.LoadLevel("Loading");
+			string currentSceneName = SceneManager.GetActiveScene().name;
+			PhotonNetwork.LoadLevel(currentSceneName);
 		}
 	}
 
