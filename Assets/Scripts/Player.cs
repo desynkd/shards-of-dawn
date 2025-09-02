@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 5f;
     private float horizontalMovement;
+    public float HorizontalMovement => horizontalMovement;
 
     [Header("Jump")]
     public float jumpPower = 10f;
