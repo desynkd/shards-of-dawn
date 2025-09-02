@@ -202,21 +202,22 @@ public class GameEndManager : MonoBehaviour
 
     private void LoadNextScene()
     {
-        Debug.Log("Reloading current scene...");
+        Debug.Log("Loading GameLevel02...");
+
         // Reset camera and torch features before scene transition
         ResetFeatures();
 
-        string currentSceneName = SceneManager.GetActiveScene().name;
+        // Load next scene
         if (PhotonNetwork.IsConnectedAndReady && PhotonNetwork.InRoom)
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.LoadLevel(currentSceneName);
+                PhotonNetwork.LoadLevel("GameLevel02");
             }
         }
         else
         {
-            SceneManager.LoadScene(currentSceneName);
+            SceneManager.LoadScene("GameLevel02");
         }
     }
 
