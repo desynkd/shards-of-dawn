@@ -73,8 +73,8 @@ public class EnemyPatrol : MonoBehaviourPun
 	{
 		if (player == null) return;
 		if (triggeredKill) return;
+		if (player.pv != null && !player.pv.IsMine) return; // Only trigger for local player
 		
-		// Remove the local player check - any player hitting the enemy should trigger restart for everyone
 		triggeredKill = true;
 		// ShowGameOverUI(); // Removed to prevent Game Over text from flashing
 		Invoke(nameof(RequestLoad), killDelaySeconds);
