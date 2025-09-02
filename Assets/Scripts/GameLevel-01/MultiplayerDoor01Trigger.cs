@@ -13,9 +13,7 @@ public class MultiplayerDoor01Trigger : MonoBehaviourPun
 
     private int playerCount = 0;
     private bool[] buttonPressed = new bool[3]; // 0:01, 1:04, 2:05
-    private bool[] buttonColliding = new bool[3]; // For 4 players, track if any player is on each button
     private bool doorDeactivated = false;
-    private Coroutine reactivateCoroutine;
 
     void Start()
     {
@@ -51,6 +49,8 @@ public class MultiplayerDoor01Trigger : MonoBehaviourPun
                 Debug.Log("[MultiplayerDoor01Trigger] Activated Button 05 for 3+ players");
             }
         }
+
+        Debug.Log($"[MultiplayerDoor01Trigger] New Logic - 1 player: Button 01 only, 2 players: Buttons 01+04, 3+ players: All three buttons");
     }
 
     // Called by PressureButton scripts - now uses RPC for multiplayer synchronization
@@ -83,60 +83,50 @@ public class MultiplayerDoor01Trigger : MonoBehaviourPun
 
         Debug.Log($"[MultiplayerDoor01Trigger] Button {buttonIndex} pressed. Player count: {playerCount}. Button states: 01={buttonPressed[0]}, 04={buttonPressed[1]}, 05={buttonPressed[2]}");
 
-        int requiredButtons = Mathf.Min(playerCount, 3);
-        int pressedCount = 0;
-        for (int i = 0; i < 3; i++) if (buttonPressed[i]) pressedCount++;
-
-        if (pressedCount >= requiredButtons)
-        {
-            DeactivateDoor();
-        }
+        // Check if door should be opened based on new logic
+        CheckDoorConditions();
     }
 
+    // Button release logic removed - buttons stay pressed permanently once activated
     public void OnButtonReleased(int buttonIndex)
     {
-        if (PhotonNetwork.InRoom)
-        {
-            photonView.RPC("RPC_OnButtonReleased", RpcTarget.All, buttonIndex);
-        }
-        else
-        {
-            HandleButtonReleased(buttonIndex);
-        }
-    }
-
-    [PunRPC]
-    private void RPC_OnButtonReleased(int buttonIndex)
-    {
-        HandleButtonReleased(buttonIndex);
-    }
-
-    private void HandleButtonReleased(int buttonIndex)
-    {
-        buttonColliding[buttonIndex] = false;
+        // No action needed - buttons don't release in new logic
     }
 
     public void OnButtonCollide(int buttonIndex)
     {
-        if (PhotonNetwork.InRoom)
-        {
-            photonView.RPC("RPC_OnButtonCollide", RpcTarget.All, buttonIndex);
-        }
-        else
-        {
-            HandleButtonCollide(buttonIndex);
-        }
+        // No action needed - collision tracking not required in new logic
     }
 
-    [PunRPC]
-    private void RPC_OnButtonCollide(int buttonIndex)
+    private void CheckDoorConditions()
     {
-        HandleButtonCollide(buttonIndex);
-    }
+        if (doorDeactivated) return;
 
-    private void HandleButtonCollide(int buttonIndex)
-    {
-        buttonColliding[buttonIndex] = true;
+        bool shouldOpenDoor = false;
+
+        if (playerCount <= 1)
+        {
+            // Single player or offline: only need button 01
+            shouldOpenDoor = buttonPressed[0];
+            Debug.Log($"[MultiplayerDoor01Trigger] Single player mode: Button 01 pressed = {buttonPressed[0]}");
+        }
+        else if (playerCount == 2)
+        {
+            // Two players: need buttons 01 AND 04 (no order requirement)
+            shouldOpenDoor = buttonPressed[0] && buttonPressed[1];
+            Debug.Log($"[MultiplayerDoor01Trigger] Two player mode: Button 01 = {buttonPressed[0]}, Button 04 = {buttonPressed[1]}");
+        }
+        else // playerCount >= 3
+        {
+            // Three or more players: need all three buttons (no order requirement)
+            shouldOpenDoor = buttonPressed[0] && buttonPressed[1] && buttonPressed[2];
+            Debug.Log($"[MultiplayerDoor01Trigger] Three+ player mode: Button 01 = {buttonPressed[0]}, Button 04 = {buttonPressed[1]}, Button 05 = {buttonPressed[2]}");
+        }
+
+        if (shouldOpenDoor)
+        {
+            DeactivateDoor();
+        }
     }
 
     private void DeactivateDoor()
@@ -144,25 +134,10 @@ public class MultiplayerDoor01Trigger : MonoBehaviourPun
         if (doorToDeactivate != null)
             doorToDeactivate.SetActive(false);
         doorDeactivated = true;
+        Debug.Log("[MultiplayerDoor01Trigger] Door permanently deactivated!");
     }
 
-    private IEnumerator ReactivateDoorAfterDelay()
-    {
-        yield return null;
-    }
-
-    private void RestartScene(){}
-
-    private IEnumerator MasterClientRestartBackup(){yield return null;}
-
-    // Alternative method to force scene sync if needed
-    [PunRPC]
-    private void RPC_ForceSceneSync(){}
-
-    [PunRPC]
-    private void RPC_RestartScene(){}
-
-    private IEnumerator RestartSceneWithDelay(){yield return null;}
+    // Removed unused restart scene methods - no longer needed with new logic
 
     // Helper for PressureButton scripts to register their index
     public int GetButtonIndex(GameObject buttonObj)

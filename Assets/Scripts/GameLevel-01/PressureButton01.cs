@@ -61,30 +61,12 @@ public class PressureButton01 : MonoBehaviour
             }
         }
         
-        // Always notify collision for 4-player mode
-        if (doorScript != null && buttonIndex >= 0)
-        {
-            doorScript.OnButtonCollide(buttonIndex);
-        }
+        // Collision tracking removed - no longer needed
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag(playerTag))
-        {
-            isPressed = false;
-            if (spriteRenderer != null && pressedSprite != null)
-            {
-                // Reset to original sprite (you might want to store the original sprite)
-                // For now, we'll just set it to null to show the default
-                spriteRenderer.sprite = null;
-            }
-            
-            // Notify the door trigger system
-            if (doorScript != null && buttonIndex >= 0)
-            {
-                doorScript.OnButtonReleased(buttonIndex);
-            }
-        }
+        // Button stays pressed permanently - no reset logic
+        // Once pressed, the button remains in pressed state
     }
 }

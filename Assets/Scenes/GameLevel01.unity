@@ -2056,8 +2056,8 @@ GameObject:
   m_Component:
   - component: {fileID: 544001724}
   - component: {fileID: 544001723}
+  - component: {fileID: 544001725}
   - component: {fileID: 544001722}
-  - component: {fileID: 544001721}
   m_Layer: 0
   m_Name: PressureButton04
   m_TagString: Untagged
@@ -2065,18 +2065,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &544001721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 544001720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 416cf1c24a48c39469fe2f2a3f0e7d51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PressureButton04
 --- !u!61 &544001722
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2196,6 +2184,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &544001725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544001720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd8dfdc692ea294ebd5fbe991f18205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PressureButton04
+  doorTrigger: {fileID: 798264854}
+  pressedSprite: {fileID: -863646044393144132, guid: 1c0dbf7f0b4fdb242927955863f28ce2, type: 3}
+  playerTag: Player
 --- !u!1 &544134037
 GameObject:
   m_ObjectHideFlags: 0
