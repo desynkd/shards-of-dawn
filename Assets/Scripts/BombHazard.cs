@@ -23,7 +23,8 @@ public class BombHazard : MonoBehaviourPun
 	void TryHandle(GameObject other)
 	{
 		if (triggered) return;
-		var player = other.GetComponent<Player>();
+		var player = other.GetComponentInParent<Player>();
+		if (player == null) player = other.GetComponent<Player>();
 		if (player == null) return;
 		if (player.pv != null && !player.pv.IsMine) return; // Only trigger for local player
 		
