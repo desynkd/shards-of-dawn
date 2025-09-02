@@ -7748,7 +7748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2100109343}
   - component: {fileID: 2100109344}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: RespawnLayerTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
