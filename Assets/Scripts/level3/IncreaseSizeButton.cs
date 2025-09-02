@@ -4,47 +4,53 @@ using UnityEngine.Tilemaps;
 public class IncreaseSizeButton : MonoBehaviour
 {
     public Player player;
-    public Tilemap tilemap;
     public TileBase pressedTile;
-    public Vector3Int buttonTilePosition;
+    public TileBase defaultTile; // Assign in inspector
+    private Tilemap tilemap;
+    private bool isPressed = false;
+    private bool canIncrease = true;
+    private Vector3Int lastPressedCell;
 
-    void Awake() { }
-
-    public void OnButtonPress()
+    private void Start()
     {
-        if (player != null)
-        {
-            player.ChangeSize(1.2f); // Increase size by 20%
-        }
-        if (tilemap != null && pressedTile != null)
-            tilemap.SetTile(buttonTilePosition, pressedTile);
+        tilemap = GetComponent<Tilemap>();
     }
 
-    public void OnButtonRelease()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (tilemap != null)
-            tilemap.SetTile(buttonTilePosition, null); // Revert to default design
-    }
-
-    [System.Obsolete]
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        if (isPressed) return;
+        if (collision.gameObject.CompareTag("Player"))
         {
-            // Check if player is above the button
-            Rigidbody2D rb = other.attachedRigidbody;
-            if (rb != null && rb.velocity.y < 0)
+            foreach (ContactPoint2D contact in collision.contacts)
             {
-                OnButtonPress();
+                if (tilemap != null && pressedTile != null)
+                {
+                    Vector3Int cellPos = tilemap.WorldToCell(contact.point);
+                    tilemap.SetTile(cellPos, pressedTile);
+                    lastPressedCell = cellPos;
+                }
+                if (canIncrease && player != null)
+                {
+                    player.ChangeSize(1.2f);
+                    canIncrease = false;
+                }
+                isPressed = true;
+                break;
             }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            OnButtonRelease();
+            if (tilemap != null)
+            {
+                tilemap.SetTile(lastPressedCell, defaultTile);
+            }
+            isPressed = false;
+            canIncrease = true;
         }
     }
+
 }
