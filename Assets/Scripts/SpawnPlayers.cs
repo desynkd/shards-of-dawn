@@ -47,6 +47,17 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
         hasSpawned = true;
         Vector2 randomPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
         Debug.Log("[SpawnPlayers] Spawning player at position: " + randomPosition + " with prefab: " + playerPrefab.name);
-        PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+        GameObject spawnedPlayer = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+
+        // Apply scale increase for all levels after level 2 (from Level03-1 onwards)
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        if (sceneName.StartsWith("Level03") || sceneName.StartsWith("GameLevel03") || sceneName.CompareTo("Level02") > 0)
+        {
+            var playerScript = spawnedPlayer.GetComponent<Player>();
+            if (playerScript != null)
+            {
+                playerScript.ChangeSize(1.5f); // Increase by 50%
+            }
+        }
     }
 }
