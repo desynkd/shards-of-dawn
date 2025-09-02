@@ -58,11 +58,11 @@ public class GameEndManager : MonoBehaviour
 
     private IEnumerator RevealFullVision(float speed)
     {
-        Debug.Log("Revealing full vision by increasing global lighting...");   
+        Debug.Log("Revealing full vision by increasing global lighting...");
         // Find all global lights
         var allLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
         var globalLights = new List<Light2D>();
-        
+
         foreach (var light in allLights)
         {
             if (light.lightType == Light2D.LightType.Global)
@@ -203,7 +203,7 @@ public class GameEndManager : MonoBehaviour
     private void LoadNextScene()
     {
         Debug.Log("Loading GameLevel02...");
-        
+
         // Reset camera and torch features before scene transition
         ResetFeatures();
 

@@ -29,11 +29,7 @@ public class DontPushButtonManager : MonoBehaviour
                         tilemap.SetTile(cellPos, pressedTile);
                     }
                     respawnTriggered = true;
-                    GameEndManager manager = FindFirstObjectByType<GameEndManager>();
-                    if (manager != null)
-                        manager.StartGameEndSequence(transform.position, 5f, 5f, 5f, 2f, 1f, 1f);
-
-                    // Scene reload and respawn handled by GameEndManager
+                    LevelRespawnManager.RespawnCurrentLevel();
                     break;
                 }
             }
