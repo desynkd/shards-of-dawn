@@ -5603,6 +5603,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1155497194}
+  - component: {fileID: 1155497196}
+  - component: {fileID: 1155497195}
   m_Layer: 0
   m_Name: MultiplayerDoor02Trigger
   m_TagString: Untagged
@@ -5625,6 +5627,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1155497195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155497193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91579ac8a7e835f4fae5abfeefe15d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiplayerDoor02Setup
+  autoSetupPhotonView: 1
+--- !u!114 &1155497196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155497193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd4a20c18e53b841970e8b507f01f6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MultiplayerDoor02Trigger
+  doorToDeactivate: {fileID: 114102970}
+  pressureButton01: {fileID: 1251685299}
 --- !u!1 &1251685299
 GameObject:
   m_ObjectHideFlags: 0
@@ -5635,6 +5664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1251685303}
   - component: {fileID: 1251685302}
+  - component: {fileID: 1251685304}
   - component: {fileID: 1251685301}
   m_Layer: 0
   m_Name: PressureButton01
@@ -5762,6 +5792,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1251685304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251685299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1576a9d7d69d7f34cad7cd389809f990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Level2PressureButton01
+  doorToDeactivate: {fileID: 114102970}
+  doorTrigger: {fileID: 1155497193}
+  pressedSprite: {fileID: -863646044393144132, guid: 1c0dbf7f0b4fdb242927955863f28ce2, type: 3}
+  playerTag: Player
 --- !u!1 &1342541128
 GameObject:
   m_ObjectHideFlags: 0
