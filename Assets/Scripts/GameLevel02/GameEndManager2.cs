@@ -30,6 +30,13 @@ public class GameEndManager2 : MonoBehaviour
     {
         if (isEndingSequence) return;
         isEndingSequence = true;
+        
+        // Switch to game end music immediately when sequence starts
+        if (GameLevel02MusicManager.Instance != null)
+        {
+            GameLevel02MusicManager.Instance.SwitchToGameEndMusicWithFade();
+        }
+        
         StartCoroutine(GameEndSequence(endPosition, endZoom, moveSpeed, zoomSpeed, visionRevealSpeed, fadeSpeed, transitionDelay));
     }
 
