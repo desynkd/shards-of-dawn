@@ -219,12 +219,12 @@ public class GameEndManager2 : MonoBehaviour
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.LoadLevel("Level03-1");
+                PhotonNetwork.LoadLevel("Level03-2");
             }
         }
         else
         {
-            SceneManager.LoadScene("Level03-1");
+            SceneManager.LoadScene("Level03-2");
         }
     }
 
