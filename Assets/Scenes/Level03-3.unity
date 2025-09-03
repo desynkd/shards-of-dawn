@@ -1539,12 +1539,10 @@ MonoBehaviour:
   sceneTransitionDelay: 2
   isTrigger: 1
   triggerSize: {x: 1, y: 1}
-  celebrationParticles: {fileID: 0}
-  victorySound: {fileID: 0}
-  particleDuration: 3
-  soundFadeOutDuration: 1
   victoryMessage: Congratulations! You have completed Shards of Dawn!
   victoryTextDisplayTime: 3
+  celebrationParticles: {fileID: 0}
+  victorySound: {fileID: 0}
 --- !u!1001 &569350187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1663,7 +1661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4425840283047234640, guid: a2cc71b5d8b08d84b824464e4e606e1f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5687806081752127030, guid: a2cc71b5d8b08d84b824464e4e606e1f, type: 3}
       propertyPath: jumpPower
