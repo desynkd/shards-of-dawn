@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Photon.Pun;
 
-public class DecreaseSizeButton : MonoBehaviour
+public class DecreaseSizeButton : MonoBehaviourPun
 {
+    public float decreaseFactor = 0.8f;
     public float decreaseCooldown = 0.5f; // seconds
     private bool canDecrease = true;
-    public Player player;
     public TileBase pressedTile;
     public TileBase defaultTile; // Assign in inspector
     private Tilemap tilemap;
@@ -32,6 +33,13 @@ public class DecreaseSizeButton : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Player")) return;
+
+        // Get the Player component
+        Player player = collision.gameObject.GetComponent<Player>();
+        if (player == null) return;
+
+        // Only local player can trigger size change in multiplayer
+        if (player.pv != null && !player.pv.IsMine) return;
 
         // Cancel pending release if player re-enters quickly
         if (pendingRelease != null)
@@ -64,11 +72,26 @@ public class DecreaseSizeButton : MonoBehaviour
                     tilemap.RefreshTile(cellPos);
                     lastPressedCell = cellPos;
                 }
-                if (canDecrease && player != null)
+
+                if (canDecrease)
                 {
-                    player.ChangeSize(0.8f);
+                    // Sync the size change across the network
+                    if (PhotonNetwork.IsConnected && player.pv != null)
+                    {
+                        // Use the player's PhotonView to sync the size change
+                        player.pv.RPC("RPC_ChangeSize", RpcTarget.All, decreaseFactor);
+                    }
+                    else
+                    {
+                        // Fallback for single player
+                        player.ChangeSize(decreaseFactor);
+                    }
                     canDecrease = false;
+
+                    // Debug log
+                    Debug.Log($"[DecreaseSizeButton] Player {(player.pv?.OwnerActorNr.ToString() ?? "local")} size decreased by factor {decreaseFactor}");
                 }
+
                 isPressed = true;
                 break;
             }
@@ -84,6 +107,12 @@ public class DecreaseSizeButton : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Player")) return;
+
+        Player player = collision.gameObject.GetComponent<Player>();
+        if (player == null) return;
+
+        // Only local player can reset button in multiplayer
+        if (player.pv != null && !player.pv.IsMine) return;
 
         if (currentPlayers.Contains(collision.gameObject))
             currentPlayers.Remove(collision.gameObject);
@@ -112,5 +141,4 @@ public class DecreaseSizeButton : MonoBehaviour
         }
         pendingRelease = null;
     }
-
 }
