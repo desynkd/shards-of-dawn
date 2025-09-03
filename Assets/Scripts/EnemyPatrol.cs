@@ -80,8 +80,18 @@ public class EnemyPatrol : MonoBehaviourPun
 		if (player.pv != null && !player.pv.IsMine) return; // Only trigger for local player
 		
 		triggeredKill = true;
-		// ShowGameOverUI(); // Removed to prevent Game Over text from flashing
-		Invoke(nameof(RequestLoad), killDelaySeconds);
+		// Shift player position instead of restarting scene
+		ShiftPlayerPosition(player);
+	}
+
+	void ShiftPlayerPosition(Player player)
+	{
+		// Set player position to x=-19, y=0
+		Vector3 newPosition = new Vector3(-19f, 0f, player.transform.position.z);
+		player.transform.position = newPosition;
+		
+		// Reset triggered state to allow future interactions
+		triggeredKill = false;
 	}
 
 	void RequestLoad()
