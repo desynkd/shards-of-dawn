@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   cutsceneDuration: 24
-  nextSceneName: GameLevel01
+  nextSceneName: Level03-1
 --- !u!4 &702891586
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LiftController : MonoBehaviour
+public class LiftControllerLevel3 : MonoBehaviour
 {
     public float moveDistance = 3f; // Distance to move up and down
     public float moveSpeed = 2f;    // Speed of movement
