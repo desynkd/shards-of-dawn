@@ -2,11 +2,20 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using System.Collections.Generic;
+using System.Collections;
 
 public class NextLevel : MonoBehaviour
 {
+    [Header("Transition Settings")]
+    public float fadeSpeed = 0.5f; // Speed of the fade transition
+    public float transitionDelay = 0.2f; // Brief delay before scene change
+
     private HashSet<int> playersWhoReached = new HashSet<int>();
     private bool levelTransitioning = false;
+
+    // UI elements for transition fade
+    private Canvas fadeCanvas;
+    private UnityEngine.UI.Image fadeImage;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -54,8 +63,75 @@ public class NextLevel : MonoBehaviour
         if (levelTransitioning) return;
 
         levelTransitioning = true;
-        Debug.Log("All required players have reached the exit! Advancing to next level...");
+        Debug.Log("All required players have reached the exit! Starting door transition...");
 
+        // Start the door transition sequence
+        StartCoroutine(DoorTransitionSequence());
+    }
+
+    private IEnumerator DoorTransitionSequence()
+    {
+        Debug.Log("Starting door transition...");
+
+        // Start fade to black
+        yield return StartCoroutine(FadeToBlack(fadeSpeed));
+
+        // Brief delay while screen is black
+        yield return new WaitForSeconds(transitionDelay);
+
+        // Load next scene
+        LoadNextScene();
+    }
+
+    private IEnumerator FadeToBlack(float speed)
+    {
+        Debug.Log("Fading to black...");
+
+        // Create fade canvas
+        CreateFadeCanvas();
+
+        float elapsedTime = 0f;
+        Color startColor = new Color(0f, 0f, 0f, 0f); // Transparent black
+        Color endColor = new Color(0f, 0f, 0f, 1f);   // Opaque black
+
+        while (elapsedTime < speed)
+        {
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / speed;
+            fadeImage.color = Color.Lerp(startColor, endColor, progress);
+            yield return null;
+        }
+
+        // Ensure fully black
+        fadeImage.color = endColor;
+        Debug.Log("Fade to black completed");
+    }
+
+    private void CreateFadeCanvas()
+    {
+        // Create canvas
+        GameObject canvasGO = new GameObject("DoorTransitionCanvas");
+        fadeCanvas = canvasGO.AddComponent<Canvas>();
+        fadeCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        fadeCanvas.sortingOrder = 999; // Ensure it's on top
+        canvasGO.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+
+        // Create fade image
+        GameObject imageGO = new GameObject("FadeImage");
+        imageGO.transform.SetParent(canvasGO.transform, false);
+        fadeImage = imageGO.AddComponent<UnityEngine.UI.Image>();
+        fadeImage.color = new Color(0f, 0f, 0f, 0f); // Start transparent
+
+        // Set image to fill screen
+        RectTransform rectTransform = fadeImage.GetComponent<RectTransform>();
+        rectTransform.anchorMin = Vector2.zero;
+        rectTransform.anchorMax = Vector2.one;
+        rectTransform.offsetMin = Vector2.zero;
+        rectTransform.offsetMax = Vector2.zero;
+    }
+
+    private void LoadNextScene()
+    {
         string currentScene = SceneManager.GetActiveScene().name;
         string nextScene = "";
 
@@ -70,6 +146,8 @@ public class NextLevel : MonoBehaviour
 
         if (!string.IsNullOrEmpty(nextScene))
         {
+            Debug.Log($"Loading next scene: {nextScene}");
+
             // Load scene based on whether we're in a Photon room
             if (PhotonNetwork.IsConnectedAndReady && PhotonNetwork.InRoom)
             {
@@ -124,7 +202,7 @@ public class NextLevel : MonoBehaviour
         {
             playersWhoReached.Clear();
             playersWhoReached.Add(1); // Add a dummy player
-            AdvanceToNextLevel();
+            StartCoroutine(DoorTransitionSequence());
         }
     }
 }

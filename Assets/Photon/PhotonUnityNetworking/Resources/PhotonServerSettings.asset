@@ -52,6 +52,9 @@ MonoBehaviour:
   - RPC_ForceSceneSync
   - RPC_RestartScene
   - RPC_RequestRestart
+  - RPC_TriggerDeathForAll
+  - RPC_ShowDeathUI
+  - RPC_ChangeSize
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

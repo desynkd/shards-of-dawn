@@ -68,6 +68,15 @@ public class Player : MonoBehaviour
         transform.localScale *= scaleMultiplier;
         groundCheckSize *= scaleMultiplier;
     }
+
+    [PunRPC]
+    void RPC_ChangeSize(float scaleMultiplier)
+    {
+        // This method will be called on all clients
+        Debug.Log($"[Player] RPC_ChangeSize called with factor: {scaleMultiplier}");
+        ChangeSize(scaleMultiplier);
+    }
+
     void Update()
     {
         if (!pv.IsMine) return;
